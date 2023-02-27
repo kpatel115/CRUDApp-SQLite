@@ -3,11 +3,11 @@ var router = express.Router();
 //const { randomUUID } = require("node:crypto");
 const contactsRepo = require('../src/contactsFileRepository');
 // const contactsRepo = require('../src/contactsFileRepository.js');
-
-let data = [
-  {name: "karan", id: "ddad031e-e030-419a-9518-2f16534edeaf"},
-  {id: "e4a9c8f6-4bb8-44f5-8915-8df78500f6e3", name: "vawn", lname: "patel", email: "vawnpatel@gmail.com", notes: "this is example contact", date: 1676952665922 }
-]
+const { body, validationResult } = require('express-validator');
+// let data = [
+//   {name: "karan", id: "ddad031e-e030-419a-9518-2f16534edeaf"},
+//   {id: "e4a9c8f6-4bb8-44f5-8915-8df78500f6e3", name: "vawn", lname: "patel", email: "vawnpatel@gmail.com", notes: "this is example contact", date: 1676952665922 }
+// ]
 
 
 /* GET Contacts Database. */
@@ -22,8 +22,11 @@ router.get('/add', function(req, res, next) {
 });
 
 /* POST Create Contact  */
-router.post('/add', function(req, res, next) {
+router.post('/add', 
   // console.log(req.body);
+  body('firstName').trim().notEmpty(),
+  function(req, res, next) {
+  const result = validationResult(req);
   if(req.body.firstName.trim() === "") {
     res.render('contacts_add', { title: "Add a Contact", msg: "Please fill out the form"});
   } else {
