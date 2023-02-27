@@ -4,8 +4,12 @@ block content
   h1= title
   p Use the form below to add a Contact.
   hr
-  if msg 
-    p(class="error-msg") = msg
+  if msg
+    ul 
+      each val in msg 
+        li(class='error-msg')= val.msg 
+
+    
 
   div.index-form
     h2 Add a Contact

@@ -20,15 +20,14 @@ router.get('/', function(req, res, next) {
 router.get('/add', function(req, res, next) {
   res.render('contacts_add', { title: 'Add An Express Contact' });
 });
-
 /* POST Create Contact  */
 router.post('/add', 
   // console.log(req.body);
   body('firstName').trim().notEmpty(),
   function(req, res, next) {
   const result = validationResult(req);
-  if(req.body.firstName.trim() === "") {
-    res.render('contacts_add', { title: "Add a Contact", msg: "Please fill out the form"});
+  if(! result.isEmpty()) {
+    res.render('contacts_add', { title: "Add a Contact", msg: result.array()});
   } else {
     // add contact to database
     contactsRepo.create({name: req.body.firstName.trim(), lname: req.body.lastName.trim(), email:req.body.email.trim(), notes: req.body.notes.trim()})
