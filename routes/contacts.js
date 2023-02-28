@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
-//const { randomUUID } = require("node:crypto");
+const contactsController = require('../controllers/contactController');
 const contactsRepo = require('../src/contactsFileRepository');
-// const contactsRepo = require('../src/contactsFileRepository.js');
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
+// , validationResult 
+
 // let data = [
 //   {name: "karan", id: "ddad031e-e030-419a-9518-2f16534edeaf"},
 //   {id: "e4a9c8f6-4bb8-44f5-8915-8df78500f6e3", name: "vawn", lname: "patel", email: "vawnpatel@gmail.com", notes: "this is example contact", date: 1676952665922 }
@@ -11,74 +12,29 @@ const { body, validationResult } = require('express-validator');
 
 
 /* GET Contacts Database. */
-router.get('/', function(req, res, next) {
-  const data = contactsRepo.findAll()
-  res.render('contacts', { title: 'Express Contacts', contacts: data});
-});
+router.get('/', contactsController.contacts_list);
 
 /* GET Create Contact Form */
-router.get('/add', function(req, res, next) {
-  res.render('contacts_add', { title: 'Add An Express Contact' });
-});
+router.get('/add', contactsController.contacts_create_get);
 /* POST Create Contact  */
 router.post('/add', 
   // console.log(req.body);
-  body('firstName').trim().notEmpty(),
-  function(req, res, next) {
-  const result = validationResult(req);
-  if(! result.isEmpty()) {
-    res.render('contacts_add', { title: "Add a Contact", msg: result.array()});
-  } else {
-    // add contact to database
-    contactsRepo.create({name: req.body.firstName.trim(), lname: req.body.lastName.trim(), email:req.body.email.trim(), notes: req.body.notes.trim()})
-    res.redirect('/contacts');
-    res.send('contact created');
-  }
-  
-});
+  // body('firstName').trim().notEmpty(),
+  contactsController.contacts_create_post);
 
 /* GET Single Contact */ 
-router.get('/:uuid', function(req, res, next) {
-  const contact = contactsRepo.findById(req.params.uuid);
-  if (contact) {
-    res.render('contact', { title: 'Your Contact', contact: contact });
-  } else {
-    res.redirect('/contacts');
-  }
-  
-});
+router.get('/:uuid', contactsController.contacts_detail);
 
 /* GET Delete Contact */
-router.get('/:uuid/delete', function(req, res, next) {
-  const contact = contactsRepo.findById(req.params.uuid);
-  res.render('contacts_delete', { title: 'Delete An Express Contact', contact: contact });
-});
+router.get('/:uuid/delete', contactsController.contacts_delete_get);
 
 /* POST Delete Contact */
-router.post('/:uuid/delete', function(req, res, next) {
-  //delete from repo
-  contactsRepo.deleteById(req.params.uuid);
-  res.redirect('/contacts')
-});
+router.post('/:uuid/delete', contactsController.contacts_delete_post);
 
 /* GET Edit Contact */
-router.get('/:uuid/edit', function(req, res, next) {
-  const contact = contactsRepo.findById(req.params.uuid);
-  res.render('contacts_edit', { title: 'Edit An Express Contact', contact: contact });
-});
+router.get('/:uuid/edit', contactsController.contacts_edit_get);
 
 /* POST Edit Contact  */
-router.post('/:uuid/edit', function(req, res, next) {
-  if (req.body.firstName.trim() === "") {
-    const contact = contactsRepo.findById(req.params.uuid);
-    res.render('contacts_edit', { title: "Edit a Contact", msg: 'Please fill out the form'});
-  } else {
-    // update Database
-    const updatedContact = {id: req.params.uuid, name: req.body.firstName.trim(), lname: req.body.lastName.trim(), email: req.body.email.trim(), notes: req.body.notes.trim() };
-    contactsRepo.update(updatedContact);
-    res.redirect(`/contacts/${req.params.uuid}`);
-  }
-  
-});
+router.post('/:uuid/edit', contactsController.contact_edit_post);
 
 module.exports = router;

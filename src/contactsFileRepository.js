@@ -4,17 +4,19 @@ const crypto = require('crypto');
 const db = new Map();
 const fs = require('fs');
 const path = require('path');
-  
+const Contact = require('./Contact');
 // db.set('ddad031e-e030-419a-9518-2f16534edeaf', {name: "karan", id: "ddad031e-e030-419a-9518-2f16534edeaf"})
 // db.set('e4a9c8f6-4bb8-44f5-8915-8df78500f6e3', {name: "patel", id: "e4a9c8f6-4bb8-44f5-8915-8df78500f6e3"})
-// //db map with two objects
+//db map with two objects
 
 const loadData = () => {
   const jsonData = fs.readFileSync(path.join(__dirname, '../data/contacts.json'));
   const contactsArray = JSON.parse(jsonData);
   contactsArray.forEach(element => {
-    db.set(element[0], element[1]);
-  })   
+    const aContact = new Contact(element[1].id, element[1].name, element[1].lname, element[1].email, element[1].notes, element[1].time);
+    db.set(aContact.id, aContact);
+  });
+  console.log(db);   
 };
 const saveData = () => {
   const stringifyData = JSON.stringify(Array.from(db));
