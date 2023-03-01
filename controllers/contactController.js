@@ -18,7 +18,7 @@ exports.contacts_create_get = function(req, res, next) {
 /* POST Create Contact  */
 exports.contacts_create_post = function(req, res, next) {
   const result = validationResult(req);
-  if(! result.isEmpty()) {
+  if(!result.isEmpty()) {
     res.render('contacts_add', { title: "Add a Contact", msg: result.array()});
   } else {
     const newContact = new Contact('', req.body.contact.name, req.body.lname, req.body.email, req.body.notes, req.body.time);
