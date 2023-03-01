@@ -21,12 +21,11 @@ exports.contacts_create_post = function(req, res, next) {
   if(!result.isEmpty()) {
     res.render('contacts_add', { title: "Add a Contact", msg: result.array()});
   } else {
-    const newContact = new Contact('', req.body.contact.name, req.body.lname, req.body.email, req.body.notes, ''); //req.body.time
+    const newContact = new Contact('', req.body.name, req.body.lname, req.body.email, req.body.notes, ''); //req.body.time
     contactsRepo.create(newContact)
     // add contact to database
     // contactsRepo.create({name: req.body.firstName.trim(), lname: req.body.lastName.trim(), email:req.body.email.trim(), notes: req.body.notes.trim()})
     res.redirect('/contacts');
-
   }
   
 };
@@ -65,10 +64,10 @@ exports.contacts_edit_get = function(req, res, next) {
 exports.contact_edit_post = function(req, res, next) {
   if (req.body.firstName.trim() === "") {
     const contact = contactsRepo.findById(req.params.uuid);
-    res.render('contacts_edit', { title: "Edit a Contact", msg: 'Please fill out the form'});
+    res.render('contacts_edit', { title: "Edit a Contact", msg: 'Please fill out the form', contact: contact });
   } else {
     // update Database
-    const updatedContact = new Contact (req.params.uuid, req.body.name.trim(), req.body.lname.trim(), req.body.email.trim(), req.body.notes.trim(), req.body.time );
+    const updatedContact = new Contact (req.params.uuid, req.body.name, req.body.lname, req.body.email, req.body.notes, req.params.time );
     contactsRepo.update(updatedContact);
     res.redirect(`/contacts/${req.params.uuid}`);
   }

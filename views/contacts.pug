@@ -15,7 +15,7 @@ block content
     #contacts-wrapper 
       ul.contacts-list 
         each val in contacts
-          li(data-contactid=val.id)= val.name
+          li(data-contactid=val.id)= val.email
             | 
-            a(href=`/contacts/${val.id}`)= val.notess
+            a(href=`/contacts/${val.id}`)= val.notess // in order to get only the fa-icon
               i.fa-solid.fa-address-card(aria-hidden='true')
