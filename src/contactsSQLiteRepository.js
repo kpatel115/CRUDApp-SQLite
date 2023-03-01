@@ -9,7 +9,7 @@ const { create } = require('domain');
 
 const db = new betterSqlite3(path.join(__dirname, '../data/contacts.sqlite'), {verbose: console.log});
 
-const createStmt = db.prepare("CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, lname TEXT, email BLOB, notes TEXT, time TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)"); //lname TEXT, email TEXT, notes TEXT,
+const createStmt = db.prepare("CREATE TABLE IF NOT EXISTS contacts (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, lname TEXT NOT NULL, email BLOB, notes TEXT, time TIMESTAMP DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)"); //lname TEXT, email TEXT, notes TEXT,
 createStmt.run();
 
 // const loadData = () => {

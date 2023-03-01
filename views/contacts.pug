@@ -17,5 +17,5 @@ block content
         each val in contacts
           li(data-contactid=val.id)= val.email
             | 
-            a(href=`/contacts/${val.id}`)= val.notess // in order to get only the fa-icon
+            a(href=`/contacts/${val.id}`)= val.notess 
               i.fa-solid.fa-address-card(aria-hidden='true')
