@@ -21,7 +21,7 @@ exports.contacts_create_post = function(req, res, next) {
   if(!result.isEmpty()) {
     res.render('contacts_add', { title: "Add a Contact", msg: result.array()});
   } else {
-    const newContact = new Contact('', req.body.contact.name, req.body.lname, req.body.email, req.body.notes, req.body.time);
+    const newContact = new Contact('', req.body.contact.name, req.body.lname, req.body.email, req.body.notes, ''); //req.body.time
     contactsRepo.create(newContact)
     // add contact to database
     // contactsRepo.create({name: req.body.firstName.trim(), lname: req.body.lastName.trim(), email:req.body.email.trim(), notes: req.body.notes.trim()})
