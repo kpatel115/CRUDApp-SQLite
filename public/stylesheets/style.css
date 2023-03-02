@@ -5,10 +5,10 @@
 }
 body {
   padding: 50px;
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 p{
-  font-size: 1.2rem;
+  font-size: 1.5rem;
 }
 
 a{
@@ -29,6 +29,11 @@ ul.contacts-list{
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+ul li{
+  list-style: none;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 .error-msg{
   color: red;
