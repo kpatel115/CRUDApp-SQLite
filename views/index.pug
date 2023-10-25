@@ -20,8 +20,33 @@ block content
     p kpatel114@hawk.iit.edu
     br
 
+  div.login-box
+    h2 Login
+    form(method='POST', action='/login')
+      label Username
+      | 
+      input(type='text' name='username' required)
+      br
+      label Password
+      | 
+      input(type='text' name='password' required)
+      
+      label Enter Application
+      | 
+      button.btn-login(type='submit')
+        i.fa-solid.fa-door-open(aria-hidden='true') 
+
+      label Sign Up
+      | 
+      button.btn-register(type='submit')
+        i.fa-solid.fa-user-plus(aria-hidden='true')
+    br
+    br 
+
   div 
     label View Contacts Database
       a(href="/contacts")
         i.fa-solid.fa-database(aria-hidden='true') 
+
+  
         

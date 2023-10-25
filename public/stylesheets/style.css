@@ -59,6 +59,13 @@ ul li{
 .index-form label{
   font-size: 1.3rem; 
 }
+.login-box{
+  display: flex;
+  justify-content: flex-start;
+  align-items:center ;
+  background-color: maroon;
+  color: royalblue;
+}
 form{
   display: flex;
   flex-direction: column;
