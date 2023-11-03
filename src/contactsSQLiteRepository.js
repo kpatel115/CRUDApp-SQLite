@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const betterSqlite3 = require('better-sqlite3');
 const fs = require('fs');
 const path = require('path');
-const Contact = require('./contact');
+const Contact = require('./Contact');
 const { create } = require('domain');
 
 const db = new betterSqlite3(path.join(__dirname, '../data/contacts.sqlite'), {verbose: console.log});
